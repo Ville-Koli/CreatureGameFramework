@@ -1,2 +1,2 @@
 # CreatureGameFramework
-A framework for an open sourced creature game
+A framework for an open sourced turn-based 2D creature game
