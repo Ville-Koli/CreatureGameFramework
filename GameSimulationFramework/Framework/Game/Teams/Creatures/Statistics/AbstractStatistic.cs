@@ -1,6 +1,6 @@
-using PixelLegends.Game.GameEventArgs;
+using Framework.Game.GameEventArgs;
 
-namespace PixelLegends.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Statistics
 {    
     public abstract class Statistic
     {

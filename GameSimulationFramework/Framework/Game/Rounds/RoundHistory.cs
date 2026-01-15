@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Rounds
+namespace Framework.Game.Rounds
 {
     public class RoundHistory
     {

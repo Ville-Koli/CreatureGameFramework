@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Teams.Creatures
+namespace Framework.Game.Teams.Creatures
 {
     public class Creatures
     {

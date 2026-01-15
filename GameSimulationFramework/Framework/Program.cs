@@ -1,6 +1,6 @@
-﻿using PixelLegends.Game.Teams.Bag;
-using PixelLegends.Game.Teams.Creatures;
-using PixelLegends.Game.Teams.Creatures.Statistics;
+﻿using Framework.Game.Teams.Bag;
+using Framework.Game.Teams.Creatures;
+using Framework.Game.Teams.Creatures.Statistics;
 class Program
 {
     static void Main()
@@ -28,7 +28,6 @@ class Program
         Statistic<string> referenceName = creature2.Query<string>(StatisticType.Name)!;
 
         reference.OnValueChanged += (o, e) => {Console.WriteLine($"statistic health changed to {e.GetChangedTo()}");};
-        referenceName.OnValueChanged += (o, e) => {Console.WriteLine($"statistic name changed to {e.GetChangedTo()}");};
 
         Statistic statistic = new Statistic<int>(StatisticType.Health, 50);
 

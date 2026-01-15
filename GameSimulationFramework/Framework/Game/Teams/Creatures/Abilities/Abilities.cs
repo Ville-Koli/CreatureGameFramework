@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Teams.Creatures.Abilities
+namespace Framework.Game.Teams.Creatures.Abilities
 {
     public class Abilities
     {

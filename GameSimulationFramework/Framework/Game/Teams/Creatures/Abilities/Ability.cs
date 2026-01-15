@@ -1,6 +1,6 @@
-using PixelLegends.Game.Interfaces;
+using Framework.Game.Interfaces;
 
-namespace PixelLegends.Game.Teams.Creatures.Abilities
+namespace Framework.Game.Teams.Creatures.Abilities
 {
     public abstract class Ability : Statistics.Statistics<Ability>, IAction
     {

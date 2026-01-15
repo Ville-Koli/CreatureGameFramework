@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Interfaces
+namespace Framework.Game.Interfaces
 {
     public interface IAction
     {

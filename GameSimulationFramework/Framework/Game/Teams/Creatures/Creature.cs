@@ -1,6 +1,6 @@
-using PixelLegends.Game.Interfaces;
+using Framework.Game.Interfaces;
 
-namespace PixelLegends.Game.Teams.Creatures
+namespace Framework.Game.Teams.Creatures
 {
     public class Creature : Statistics.Statistics<Creature>, ISource
     {

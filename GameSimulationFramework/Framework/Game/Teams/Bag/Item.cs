@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Teams.Bag
+namespace Framework.Game.Teams.Bag
 {
     public class Item
     {

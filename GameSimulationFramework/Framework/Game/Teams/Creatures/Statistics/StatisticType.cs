@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Statistics
 {
     public enum StatisticType
     {

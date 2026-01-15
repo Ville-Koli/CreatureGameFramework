@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Teams
+namespace Framework.Game.Teams
 {
     public class Team
     {

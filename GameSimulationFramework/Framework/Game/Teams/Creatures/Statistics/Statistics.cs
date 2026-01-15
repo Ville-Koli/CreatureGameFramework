@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Statistics
 {
     public class Statistics<T> where T : Statistics<T>
     {
@@ -8,6 +8,10 @@ namespace PixelLegends.Game.Teams.Creatures.Statistics
             if(statistics == null) return;
 
             AddStatistics(statistic);
+        }
+        public Dictionary<StatisticType, Statistic> GetStatistics()
+        {
+            return statistics;
         }
         public T AddStatistic(Statistic statistic)
         {

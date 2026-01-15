@@ -1,4 +1,4 @@
-namespace PixelLegends.Game.GameEventArgs
+namespace Framework.Game.GameEventArgs
 {
     public class InventorySlotChangedArgs<T> : EventArgs
     {

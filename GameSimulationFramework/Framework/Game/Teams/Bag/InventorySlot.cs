@@ -1,6 +1,6 @@
-using PixelLegends.Game.GameEventArgs;
+using Framework.Game.GameEventArgs;
 
-namespace PixelLegends.Game.Teams.Bag
+namespace Framework.Game.Teams.Bag
 {
     public class InventorySlot<T>
     {
