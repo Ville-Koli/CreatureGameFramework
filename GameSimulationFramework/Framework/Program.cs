@@ -1,4 +1,5 @@
-﻿using Framework.Game.Teams.Bag;
+﻿using Framework.Game.BaseTypes;
+using Framework.Game.Teams.Bag;
 using Framework.Game.Teams.Creatures;
 using Framework.Game.Teams.Creatures.Statistics;
 class Program
@@ -44,5 +45,36 @@ class Program
             statistic health changed to 20
             statistic name changed to Creature NAME CHANGED
         **/
-    }
+
+        // Testing cloning statistics
+
+        var statisticTemplate = new StatisticTemplate<Creature>();
+        string name = "Clone Creature";
+        CloneableString cloneableString = new CloneableString(name);
+
+        statisticTemplate.AddStatistics(
+            new Statistic<CloneableInt>(StatisticType.Health, new CloneableInt(30)),
+            new Statistic<CloneableInt>(StatisticType.Stamina, new CloneableInt(50)),
+            new Statistic<CloneableInt>(StatisticType.Shield, new CloneableInt(100)),
+            new Statistic<CloneableString>(StatisticType.Name, cloneableString)
+        );
+
+        Creature newCreature = new Creature();
+
+        statisticTemplate.CopyStatistics(newCreature);
+
+        Statistic<int> statisticCloneableInt = newCreature.Query<int>(StatisticType.Health)!;
+        Console.Write("new creature health is: " + statisticCloneableInt.GetTypedValue() + " amount of statistics: " + newCreature.GetStatistics().ToArray().Length);
+        statisticCloneableInt.SetValue(50);
+
+        Console.WriteLine("creature name: " + newCreature.Query<string>(StatisticType.Name)!.GetTypedValue());
+        name += "!";
+        Console.WriteLine("creature name: " + newCreature.Query<string>(StatisticType.Name)!.GetTypedValue());
+
+        Console.WriteLine("creature name: " + statisticTemplate.Query<CloneableString>(StatisticType.Name)!.GetTypedValue()!.GetValue());
+        statisticTemplate.Query<CloneableString>(StatisticType.Name)!.GetTypedValue()!.SetValue("new creature name");
+        Console.WriteLine("creature name: " + newCreature.Query<string>(StatisticType.Name)!.GetTypedValue());
+
+        Console.WriteLine("creature name: " + statisticTemplate.Query<CloneableString>(StatisticType.Name)!.GetTypedValue()!.GetValue());
+        }
 }
