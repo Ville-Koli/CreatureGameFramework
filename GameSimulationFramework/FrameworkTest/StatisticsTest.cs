@@ -112,6 +112,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 0) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_query()
     {
@@ -123,6 +124,7 @@ public class StatisticsTest
         if(statistic.GetTypedValue()!.GetValue() == 10) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_query_empty()
     {
@@ -131,7 +133,7 @@ public class StatisticsTest
         if(statistic == null) Assert.Pass();
         Assert.Fail();
     }
-    
+
     [Test]
     [TestCase(20)]
     [TestCase(-50)]
@@ -143,11 +145,30 @@ public class StatisticsTest
         _creatureStatistics.AddStatistic(
             new Statistic<int>(StatisticType.Health, 10)
         );
+        
         _creatureStatistics.UpdateStatistic(
             new Statistic<int>(StatisticType.Health, health)
         );
         // its not null as it is defined above.
         if(_creatureStatistics.Query<int>(StatisticType.Health)!.GetTypedValue() == health) Assert.Pass();
         Assert.Fail();
+    }
+
+    [Test]
+    public void Test_equals()
+    {
+        Creature creature = new();
+        _creatureStatistics.Clear();
+        if(_creatureStatistics != creature) Assert.Pass();
+        Assert.Fail();
+    }
+
+    [Test]
+    public void Test_to_string()
+    {
+        _creatureStatistics.Clear();
+        string stringValue = _creatureStatistics.ToString()!;
+        // if didnt crash on making string of statistics then pass
+        Assert.Pass();
     }
 }

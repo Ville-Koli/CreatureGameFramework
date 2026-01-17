@@ -13,7 +13,6 @@ namespace Framework.Game.Teams.Creatures.Statistics
             this.value = value;
         }
         public StatisticType GetStatisticType() => type;
-        public void SetStatisticType(StatisticType newType) => type = newType;
         public object? GetValue() => value;
         public void SetValue(object? newValue)
         {

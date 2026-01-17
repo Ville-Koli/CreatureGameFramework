@@ -42,12 +42,40 @@ public class StatisticsTemplateTest
 
         _creatureStatisticsTemplate.AddStatistics(
             new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0)),
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0))
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(52))
         );
         if(_creatureStatisticsTemplate.StatisticCount() == 1) Assert.Pass();
         Assert.Fail();
     }
 
+    [Test]
+    public void Test_copying()
+    {
+        _creatureStatisticsTemplate.Clear();
+        Creature creature = new();
+        _creatureStatisticsTemplate.AddStatistics(
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(525)),
+            new Statistic<CloneableValue<int>>(StatisticType.Shield, new CloneableValue<int>(322)),
+            new Statistic<CloneableValue<int>>(StatisticType.Stamina, new CloneableValue<int>(115)),
+            new Statistic<CloneableValue<int>>(StatisticType.Damage, new CloneableValue<int>(237))
+        );
+        _creatureStatisticsTemplate.CopyStatistics(creature);
+        if(creature.StatisticCount() == 4) Assert.Pass();
+        Assert.Fail();
+    }
+    [Test]
+    public void Test_copy()
+    {
+        _creatureStatisticsTemplate.Clear();
+        Creature creature = new();
+        _creatureStatisticsTemplate.AddStatistics(
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(525))
+        );
+        _creatureStatisticsTemplate.CopyStatistic<int>
+        (_creatureStatisticsTemplate.Query<CloneableValue<int>>(StatisticType.Health)!, creature);
+        if(creature.StatisticCount() == 1) Assert.Pass();
+        Assert.Fail();
+    }
     [Test]
     public void Test_remove()
     {
