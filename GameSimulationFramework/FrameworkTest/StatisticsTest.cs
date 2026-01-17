@@ -6,11 +6,11 @@ namespace FrameworkTest;
 
 public class StatisticsTest
 {
-    private Statistics<Creature> _creatureStatistics;
+    private Creature _creatureStatistics;
     [SetUp]
     public void Setup()
     {
-        _creatureStatistics = new();
+        _creatureStatistics = new Creature();
     }
 
     [Test]
@@ -114,7 +114,15 @@ public class StatisticsTest
             new Statistic<CloneableInt>(StatisticType.Health, new CloneableInt(10))
         );
         Statistic<CloneableInt> statistic = _creatureStatistics.Query<CloneableInt>(StatisticType.Health)!;
-        if(statistic != null) Assert.Pass();
+        if(statistic.GetTypedValue()!.GetValue() == 10) Assert.Pass();
+        Assert.Fail();
+    }
+    [Test]
+    public void Test_query_empty()
+    {
+        _creatureStatistics.Clear();
+        Statistic<CloneableInt>? statistic = _creatureStatistics.Query<CloneableInt>(StatisticType.Health);
+        if(statistic == null) Assert.Pass();
         Assert.Fail();
     }
 }

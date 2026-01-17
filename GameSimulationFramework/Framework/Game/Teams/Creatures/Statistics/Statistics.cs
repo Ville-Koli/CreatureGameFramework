@@ -14,9 +14,10 @@ namespace Framework.Game.Teams.Creatures.Statistics
             return statistics;
         }
 
-        public void Clear()
+        public T Clear()
         {
             statistics.Clear();
+            return (T) this;
         }
 
         public int StatisticCount() => statistics.Count;
