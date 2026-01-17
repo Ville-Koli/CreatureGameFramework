@@ -1,5 +1,4 @@
 using Framework.Game.BaseTypes;
-using Framework.Game.Teams;
 using Framework.Game.Teams.Creatures;
 using Framework.Game.Teams.Creatures.Statistics;
 
@@ -19,6 +18,47 @@ public class StatisticsTemplateTest
     public void Test_clear()
     {
         _creatureStatisticsTemplate.Clear();
+
+        if(_creatureStatisticsTemplate.StatisticCount() == 0) Assert.Pass();
+        Assert.Fail();
+    }
+
+    [Test]
+    public void Test_addition()
+    {
+        _creatureStatisticsTemplate.Clear();
+
+        _creatureStatisticsTemplate.AddStatistic(
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0))
+        );
+        if(_creatureStatisticsTemplate.StatisticCount() == 1) Assert.Pass();
+        Assert.Fail();
+    }
+
+    [Test]
+    public void Test_addition_duplicate_type()
+    {
+        _creatureStatisticsTemplate.Clear();
+
+        _creatureStatisticsTemplate.AddStatistics(
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0)),
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0))
+        );
+        if(_creatureStatisticsTemplate.StatisticCount() == 1) Assert.Pass();
+        Assert.Fail();
+    }
+
+    [Test]
+    public void Test_remove()
+    {
+        _creatureStatisticsTemplate.Clear();
+
+        _creatureStatisticsTemplate.AddStatistic(
+            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0))
+        );
+
+        _creatureStatisticsTemplate.RemoveStatistic(StatisticType.Health);
+
         if(_creatureStatisticsTemplate.StatisticCount() == 0) Assert.Pass();
         Assert.Fail();
     }

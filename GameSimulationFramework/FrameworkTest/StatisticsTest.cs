@@ -32,6 +32,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 1) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_addition_duplicate_keys()
     {
@@ -48,6 +49,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 1) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_multiple_addition_int_duplicate_keys()
     {
@@ -61,6 +63,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 1) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_multiple_addition_int()
     {
@@ -74,6 +77,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 2) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_remove_by_statistic()
     {
@@ -86,6 +90,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 0) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_remove_statistic_type()
     {
@@ -98,6 +103,7 @@ public class StatisticsTest
         if(_creatureStatistics.StatisticCount() == 0) Assert.Pass();
         Assert.Fail();
     }
+
     [Test]
     public void Test_remove_from_empty_statistic_type()
     {
@@ -123,6 +129,25 @@ public class StatisticsTest
         _creatureStatistics.Clear();
         Statistic<CloneableInt>? statistic = _creatureStatistics.Query<CloneableInt>(StatisticType.Health);
         if(statistic == null) Assert.Pass();
+        Assert.Fail();
+    }
+    
+    [Test]
+    [TestCase(20)]
+    [TestCase(-50)]
+    [TestCase(0)]
+    [TestCase(100)]
+    public void Test_update_statistic(int health)
+    {
+        _creatureStatistics.Clear();
+        _creatureStatistics.AddStatistic(
+            new Statistic<int>(StatisticType.Health, 10)
+        );
+        _creatureStatistics.UpdateStatistic(
+            new Statistic<int>(StatisticType.Health, health)
+        );
+        // its not null as it is defined above.
+        if(_creatureStatistics.Query<int>(StatisticType.Health)!.GetTypedValue() == health) Assert.Pass();
         Assert.Fail();
     }
 }
