@@ -13,6 +13,13 @@ namespace Framework.Game.Teams.Creatures.Statistics
         {
             return statistics;
         }
+
+        public void Clear()
+        {
+            statistics.Clear();
+        }
+
+        public int StatisticCount() => statistics.Count;
         public T AddStatistic(Statistic statistic)
         {
             StatisticType type = statistic.GetStatisticType();

@@ -64,7 +64,7 @@ class Program
         statisticTemplate.CopyStatistics(newCreature);
 
         Statistic<int> statisticCloneableInt = newCreature.Query<int>(StatisticType.Health)!;
-        Console.Write("new creature health is: " + statisticCloneableInt.GetTypedValue() + " amount of statistics: " + newCreature.GetStatistics().ToArray().Length);
+        Console.WriteLine("new creature health is: " + statisticCloneableInt.GetTypedValue() + " amount of statistics: " + newCreature.GetStatistics().ToArray().Length);
         statisticCloneableInt.SetValue(50);
 
         Console.WriteLine("creature name: " + newCreature.Query<string>(StatisticType.Name)!.GetTypedValue());
