@@ -49,6 +49,12 @@ namespace Framework.Game.Teams.Creatures.Statistics
                 statistics.Remove(type);
             return (T) this;          
         }
+        public T RemoveStatistic(StatisticType statistic)
+        {
+            if(statistics.ContainsKey(statistic))
+                statistics.Remove(statistic);
+            return (T) this;          
+        }
         public Statistic<P>? Query<P>(StatisticType type)
         {
             if(statistics.ContainsKey(type))
