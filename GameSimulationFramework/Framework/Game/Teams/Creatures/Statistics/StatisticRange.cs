@@ -12,7 +12,7 @@ namespace Framework.Game.Teams.Creatures.Statistics
         }
         public T? GetMin() => _range.Min();
         public T? GetMax() => _range.Max();
-        public T[] RealizeValue(int amount)
+        public virtual T[] RealizeValue(int amount)
         {
             return Random.Shared.GetItems([.. _range], amount);
         }

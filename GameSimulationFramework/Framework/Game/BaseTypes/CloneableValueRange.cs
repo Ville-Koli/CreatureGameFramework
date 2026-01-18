@@ -3,6 +3,10 @@ using Framework.Game.Interfaces;
 
 namespace Framework.Game.BaseTypes
 {
+    /**
+    IEnumerable structure, which generates a range of cloneable float values between
+    the range of min and max with specified step size
+    **/
     public class CloneableValueRange : IEnumerable<CloneableFloat>, IClonable<CloneableFloat[]>
     {
         private CloneableFloat[] _value;
@@ -11,17 +15,18 @@ namespace Framework.Game.BaseTypes
         private float _step;
         public CloneableValueRange(float min, float max, float step)
         {
+            if(_max < _min) throw new InvalidOperationException("min cannot be larger than max!");
             _min = min;
             _max = max;
-            _step = step;
+            _step = step > 0 ? step : -step;
 
-            int steps = (int)((max - min) / step) + 1;
+            int steps = (int)((_max - _min) / _step) + 1;
 
             _value = new CloneableFloat[steps];
 
             for(int i = 0; i < steps; i++)
             {
-                _value[i] = new CloneableFloat(min + step * i);
+                _value[i] = new CloneableFloat(_min + _step * i);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using Framework.Game.BaseTypes;
+using Framework.Game.Extensions;
 using Framework.Game.Teams.Bag;
 using Framework.Game.Teams.Creatures;
 using Framework.Game.Teams.Creatures.Statistics;
@@ -77,25 +78,39 @@ class Program
 
         Console.WriteLine("creature name: " + statisticTemplate.Query<CloneableString>(StatisticType.Name)!.GetTypedValue()!.GetValue());
 
-
+        
         RandomTemplate<Creature> randomTemplate = new();
-        randomTemplate.AddStatistic(new Statistic<StatisticRange<CloneableValue<int>>>(StatisticType.Health, new StatisticRange<CloneableValue<int>>([
-            new CloneableInt(54),
-            new CloneableInt(64),
-            new CloneableInt(321),
-            new CloneableInt(67),
-            new CloneableInt(992),
-            new CloneableInt(10)
-        ])));
+        randomTemplate.AddStatistics(
+
+        new Statistic<
+        
+        StatisticRange<CloneableValue<float>>>
+        (StatisticType.Health,
+
+        new StatisticRange<CloneableValue<float>>(
+            new CloneableLazyValueRange(0, 100, 1f)
+        )),
+
+        new Statistic<
+        
+        StatisticRange<CloneableValue<float>>>
+        (StatisticType.Stamina,
+
+        new StatisticRange<CloneableValue<float>>(
+            new CloneableLazyValueRange(50, 100, 1f)
+        ))
+        
+        );
+
         Console.WriteLine("random template statistic count: " + randomTemplate.StatisticCount());
         Creature creature1 = new();
         randomTemplate.CopyStatistics(creature1);
 
-        Console.WriteLine("Realized value from random template: " + creature1.Query<int>(StatisticType.Health)!.GetTypedValue());
-
-        foreach(var elem in new CloneableValueRange(0, 10, 1))
+        Console.WriteLine("Realized value from random template: " + creature1.Query<float>(StatisticType.Health)!.GetTypedValue());
+        Console.WriteLine("Realized value from random template: " + creature1.Query<float>(StatisticType.Stamina)!.GetTypedValue());
+        foreach(var element in new CloneableLazyValueRange(0, 100, 25f))
         {
-            Console.WriteLine($"elem: {elem}");
+            Console.WriteLine("Realized value of elem: " + element);
         }
     }
 }
