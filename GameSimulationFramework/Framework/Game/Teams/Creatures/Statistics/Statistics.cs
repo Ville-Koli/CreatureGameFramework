@@ -14,21 +14,21 @@ namespace Framework.Game.Teams.Creatures.Statistics
             return statistics;
         }
 
-        public T Clear()
+        public virtual T Clear()
         {
             statistics.Clear();
             return (T) this;
         }
 
         public int StatisticCount() => statistics.Count;
-        public T AddStatistic(Statistic statistic)
+        public virtual T AddStatistic(Statistic statistic)
         {
             StatisticType type = statistic.GetStatisticType();
             if(!statistics.ContainsKey(type))
                 statistics[type] = statistic;
             return (T) this;      
         }
-        public T AddStatistics(params Statistic[] statistic)
+        public virtual T AddStatistics(params Statistic[] statistic)
         {
             foreach(var stat in statistic)
             {
@@ -36,27 +36,27 @@ namespace Framework.Game.Teams.Creatures.Statistics
             }
             return (T) this;
         }
-        public T UpdateStatistic(Statistic statistic)
+        public virtual T UpdateStatistic(Statistic statistic)
         {
             StatisticType type = statistic.GetStatisticType();
             if(statistics.ContainsKey(type))
                 statistics[type].SetValue(statistic.GetValue());
             return (T) this;       
         }
-        public T RemoveStatistic(Statistic statistic)
+        public virtual T RemoveStatistic(Statistic statistic)
         {
             StatisticType type = statistic.GetStatisticType();
             if(statistics.ContainsKey(type))
                 statistics.Remove(type);
             return (T) this;          
         }
-        public T RemoveStatistic(StatisticType statistic)
+        public virtual T RemoveStatistic(StatisticType statistic)
         {
             if(statistics.ContainsKey(statistic))
                 statistics.Remove(statistic);
             return (T) this;          
         }
-        public Statistic<P>? Query<P>(StatisticType type)
+        public virtual Statistic<P>? Query<P>(StatisticType type)
         {
             if(statistics.ContainsKey(type))
                 return (Statistic<P>) statistics[type];

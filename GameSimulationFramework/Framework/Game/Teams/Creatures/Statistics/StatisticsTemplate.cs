@@ -23,7 +23,7 @@ namespace Framework.Game.Teams.Creatures.Statistics
             
         }
 
-        public void CopyStatistic<P>(Statistic stat, T obj)
+        public virtual void CopyStatistic<P>(Statistic stat, T obj)
         {
             object? value = stat.GetValue();
             if(value != null && value is CloneableValue<P>){
@@ -37,7 +37,7 @@ namespace Framework.Game.Teams.Creatures.Statistics
             }            
         }
 
-        public void CopyStatistics(T obj)
+        public virtual void CopyStatistics(T obj)
         {
             // get the copy statistic method earlier so we only need to generate the
             // generic method in the for loop

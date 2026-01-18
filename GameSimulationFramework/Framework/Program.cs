@@ -76,5 +76,26 @@ class Program
         Console.WriteLine("creature name: " + newCreature.Query<string>(StatisticType.Name)!.GetTypedValue());
 
         Console.WriteLine("creature name: " + statisticTemplate.Query<CloneableString>(StatisticType.Name)!.GetTypedValue()!.GetValue());
+
+
+        RandomTemplate<Creature> randomTemplate = new();
+        randomTemplate.AddStatistic(new Statistic<StatisticRange<CloneableValue<int>>>(StatisticType.Health, new StatisticRange<CloneableValue<int>>([
+            new CloneableInt(54),
+            new CloneableInt(64),
+            new CloneableInt(321),
+            new CloneableInt(67),
+            new CloneableInt(992),
+            new CloneableInt(10)
+        ])));
+        Console.WriteLine("random template statistic count: " + randomTemplate.StatisticCount());
+        Creature creature1 = new();
+        randomTemplate.CopyStatistics(creature1);
+
+        Console.WriteLine("Realized value from random template: " + creature1.Query<int>(StatisticType.Health)!.GetTypedValue());
+
+        foreach(var elem in new CloneableValueRange(0, 10, 1))
+        {
+            Console.WriteLine($"elem: {elem}");
         }
+    }
 }

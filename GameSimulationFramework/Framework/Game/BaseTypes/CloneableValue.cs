@@ -18,5 +18,11 @@ namespace Framework.Game.BaseTypes
         {
             return _value;
         }
+        public override string ToString()
+        {
+            if(_value != null)
+                return _value.ToString()!;
+            return "";
+        }
     }
 }
