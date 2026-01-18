@@ -2,6 +2,7 @@ namespace Framework.Game
 {
     public enum ActionType
     {
-        Ability
+        Ability,
+        ExternalSource
     }
 }

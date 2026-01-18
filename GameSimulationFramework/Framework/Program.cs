@@ -82,23 +82,17 @@ class Program
         RandomTemplate<Creature> randomTemplate = new();
         randomTemplate.AddStatistics(
 
-        new Statistic<
-        
-        StatisticRange<CloneableValue<float>>>
-        (StatisticType.Health,
+        new Statistic<StatisticRange<CloneableValue<float>>>
+                    (StatisticType.Health,
+                        new StatisticRange<CloneableValue<float>>(
+                            new CloneableLazyValueRange(0, 100, 1f)
+                        )),
 
-        new StatisticRange<CloneableValue<float>>(
-            new CloneableLazyValueRange(0, 100, 1f)
-        )),
-
-        new Statistic<
-        
-        StatisticRange<CloneableValue<float>>>
-        (StatisticType.Stamina,
-
-        new StatisticRange<CloneableValue<float>>(
-            new CloneableLazyValueRange(50, 100, 1f)
-        ))
+        new Statistic<StatisticRange<CloneableValue<float>>>
+                    (StatisticType.Stamina,
+                    new StatisticRange<CloneableValue<float>>(
+                            new CloneableLazyValueRange(50, 100, 1f)
+                        ))
         
         );
 
@@ -112,5 +106,8 @@ class Program
         {
             Console.WriteLine("Realized value of elem: " + element);
         }
+        
+        // testing whether statistic can have a statistic inside it
+        Statistic<Statistic<int>> statistic1 = new(StatisticType.Damage, new Statistic<int>(StatisticType.Health, 5));
     }
 }
