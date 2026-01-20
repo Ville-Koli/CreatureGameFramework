@@ -1,7 +1,7 @@
 namespace Framework.Game.Interfaces
 {
-    public interface ISource
+    public interface ISource<T>
     {
-        public Source GetSource();
+        public Source<T> GetSource();
     }
 }

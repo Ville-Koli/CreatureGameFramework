@@ -1,12 +1,12 @@
 namespace Framework.Game
 {
-    public class Source
+    public class Source<T>
     {
-        private object source;
-        public Source(object source)
+        private T source;
+        public Source(T source)
         {
             this.source = source;
         }
-        public object GetSource() => source;
+        public T GetSource() => source;
     }
 }

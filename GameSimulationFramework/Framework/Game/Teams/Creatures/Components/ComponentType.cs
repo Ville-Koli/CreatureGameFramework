@@ -8,7 +8,16 @@ namespace Framework.Game.Teams.Creatures.Components
         Shield,
 
         Type,
-        Damage
+        Damage,
+        Abilities,
+        Ability,
+
+        Buffs,
+        Buff,
+        Debuff,
+        
+        Passives,
+        Passive
     }
 
     public enum OverallType

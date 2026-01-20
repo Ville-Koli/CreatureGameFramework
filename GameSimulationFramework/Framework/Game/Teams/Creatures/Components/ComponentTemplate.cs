@@ -4,7 +4,7 @@ using Framework.Game.GameEventArgs;
 
 namespace Framework.Game.Teams.Creatures.Components
 {
-    public class StatisticTemplate<T> : Components<StatisticTemplate<T>> where T : Components<T>
+    public class ComponentTemplate<T> : Components<ComponentTemplate<T>> where T : Components<T>
     {
         /**
         Add types here for them to be supported by statistics template
@@ -18,7 +18,7 @@ namespace Framework.Game.Teams.Creatures.Components
             typeof(CloneableValue<string>)
         };
             
-        public StatisticTemplate() 
+        public ComponentTemplate() 
         {
             
         }

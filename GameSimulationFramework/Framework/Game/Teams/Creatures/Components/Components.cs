@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Framework.Game.Teams.Creatures.Components
 {
     public class Components<T> where T : Components<T>
@@ -61,6 +63,15 @@ namespace Framework.Game.Teams.Creatures.Components
             if(components.ContainsKey(type))
                 return (Component<P>) components[type];
             return null;             
+        }
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new();
+            foreach(var pair in GetComponents())
+            {
+                stringBuilder.Append($"Component: {pair.Key} Value: {pair.Value.GetValue()}\n");
+            }
+            return stringBuilder.ToString();
         }
     }
 }

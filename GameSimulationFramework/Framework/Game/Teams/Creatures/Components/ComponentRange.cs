@@ -12,9 +12,12 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public T? GetMin() => _range.Min();
         public T? GetMax() => _range.Max();
-        public virtual T[] RealizeValue(int amount)
+        public int? GetCount() => _range.Count();
+        public virtual T[]? RealizeValue(int amount)
         {
-            return Random.Shared.GetItems([.. _range], amount);
+            if(_range.Count() > 0)
+                return Random.Shared.GetItems([.. _range], amount);
+            return null;
         }
     }
 }

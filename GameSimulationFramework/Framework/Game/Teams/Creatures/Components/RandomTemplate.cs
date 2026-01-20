@@ -5,9 +5,9 @@ using Framework.Game.GameEventArgs;
 
 namespace Framework.Game.Teams.Creatures.Components
 {
-    public class RandomTemplate<T> : StatisticTemplate<T> where T : Components<T>
+    public class RandomTemplate<T> : ComponentTemplate<T> where T : Components<T>
     {
-        public override StatisticTemplate<T> AddComponent(Component statistic)
+        public override ComponentTemplate<T> AddComponent(Component statistic)
         {
             if(statistic.GetValue() == null) return this;
 
@@ -38,8 +38,8 @@ namespace Framework.Game.Teams.Creatures.Components
             object? value = stat.GetValue();
             if(value != null && value is ComponentRange<CloneableValue<P>>){
                 ComponentRange<CloneableValue<P>> cloneable = (ComponentRange<CloneableValue<P>>?) value!;
-                CloneableValue<P>[] realizedValues = cloneable!.RealizeValue(1);
-                if(realizedValues!.Length >= 1){
+                CloneableValue<P>[]? realizedValues = cloneable!.RealizeValue(1);
+                if(realizedValues != null && realizedValues!.Length >= 1){
                     CloneableValue<P> cloneableValue = realizedValues[0];
                     obj.AddComponent(
                         new Component<P>(

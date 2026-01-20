@@ -2,9 +2,9 @@ using Framework.Game.GameEventArgs;
 
 namespace Framework.Game.Teams.Bag
 {
-    public class InventorySlot<T>
+    public class Slot<T>
     {
-        public event EventHandler<InventorySlotChangedArgs<T>>? OnItemChanged;
+        public event EventHandler<SlotChangedArgs<T>>? OnItemChanged;
         public T? Item { 
             get {
                 return item;
@@ -16,13 +16,13 @@ namespace Framework.Game.Teams.Bag
             }}
         private T? item;
         
-        public InventorySlot()
+        public Slot()
         {
             
         }
         protected virtual void OnItemChangedEvent(T? previousItem, T? toItem)
         {
-            OnItemChanged?.Invoke(this, new InventorySlotChangedArgs<T>(previousItem, toItem));
+            OnItemChanged?.Invoke(this, new SlotChangedArgs<T>(previousItem, toItem));
         }
     }
 }
