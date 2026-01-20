@@ -1,6 +1,7 @@
 using System.Reflection;
 using Framework.Game.BaseTypes;
 using Framework.Game.GameEventArgs;
+using Framework.Game.Teams.Creatures.Abilities;
 
 namespace Framework.Game.Teams.Creatures.Components
 {
@@ -15,7 +16,8 @@ namespace Framework.Game.Teams.Creatures.Components
             typeof(CloneableValue<int>),
             typeof(CloneableValue<float>),  
             typeof(CloneableValue<double>), 
-            typeof(CloneableValue<string>)
+            typeof(CloneableValue<string>),
+            typeof(CloneableValue<Ability>)
         };
             
         public ComponentTemplate() 

@@ -1,4 +1,5 @@
 using System.Text;
+using Framework.Game.Extensions;
 
 namespace Framework.Game.Teams.Creatures.Components
 {
@@ -67,9 +68,15 @@ namespace Framework.Game.Teams.Creatures.Components
         public override string ToString()
         {
             StringBuilder stringBuilder = new();
+            var sep = "\n" + "\t".GetExpansion(3);
             foreach(var pair in GetComponents())
             {
-                stringBuilder.Append($"Component: {pair.Key} Value: {pair.Value.GetValue()}\n");
+                if(pair.Value.GetValue() != null)
+                {
+                    var ls = pair.Value.GetValue()?.ToString()!.Split("\n")!;
+                    string valueString = string.Join(sep, ls);
+                    stringBuilder.Append($"Component: {pair.Key} Value: {valueString}\n");
+                }
             }
             return stringBuilder.ToString();
         }

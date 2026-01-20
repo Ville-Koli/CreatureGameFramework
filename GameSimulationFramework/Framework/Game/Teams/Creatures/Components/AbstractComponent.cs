@@ -1,3 +1,4 @@
+using System.Text;
 using Framework.Game.GameEventArgs;
 
 namespace Framework.Game.Teams.Creatures.Components
@@ -22,6 +23,12 @@ namespace Framework.Game.Teams.Creatures.Components
         protected private void OnValueChangedEvent(object? value)
         {
             OnValueChanged?.Invoke(this, new StatisticValueChangedArgs(value));
+        }
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new();
+            stringBuilder.Append($"Component: {type} Value: {value}");
+            return stringBuilder.ToString();
         }
     }
 }

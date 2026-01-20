@@ -20,5 +20,10 @@ namespace Framework.Game.Teams.Creatures.Abilities
                 healthComponent.SetTypedValue(healthComponent.GetTypedValue() - _damageComponent.GetTypedValue());
             }
         }
+
+        public override Ability Clone()
+        {
+            return new BasicAttack(_damageComponent.GetTypedValue());
+        }
     }
 }

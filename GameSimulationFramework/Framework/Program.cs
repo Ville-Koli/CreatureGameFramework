@@ -32,6 +32,17 @@ class Program
                 ComponentType.Stamina, 
                 new ComponentRange<CloneableValue<float>>(
                     new CloneableLazyValueRange(45, 55, 1)
+                    )),
+            new Component<ComponentRange<CloneableValue<Ability>>>(
+                ComponentType.Abilities, 
+                new ComponentRange<CloneableValue<Ability>>(
+                        new List<CloneableValue<Ability>>()
+                        {
+                            new CloneableValue<Ability>(new BasicAttack(10)),
+                            new CloneableValue<Ability>(new BasicAttack(15)),
+                            new CloneableValue<Ability>(new BasicAttack(8)),
+                            new CloneableValue<Ability>(new BasicAttack(23))
+                        }
                     ))
         );
 
