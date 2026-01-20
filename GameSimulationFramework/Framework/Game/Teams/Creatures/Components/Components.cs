@@ -2,64 +2,64 @@ namespace Framework.Game.Teams.Creatures.Components
 {
     public class Components<T> where T : Components<T>
     {
-        private Dictionary<ComponentType, Component> statistics = new();
-        public Components(params Component[] statistic)
+        private Dictionary<ComponentType, Component> components = new();
+        public Components(params Component[] component)
         {
-            if(statistics == null) return;
+            if(components == null) return;
 
-            AddComponents(statistic);
+            AddComponents(component);
         }
         public Dictionary<ComponentType, Component> GetComponents()
         {
-            return statistics;
+            return components;
         }
 
         public virtual T Clear()
         {
-            statistics.Clear();
+            components.Clear();
             return (T) this;
         }
 
-        public int ComponentCount() => statistics.Count;
-        public virtual T AddComponent(Component statistic)
+        public int ComponentCount() => components.Count;
+        public virtual T AddComponent(Component component)
         {
-            ComponentType type = statistic.GetComponentType();
-            if(!statistics.ContainsKey(type))
-                statistics[type] = statistic;
+            ComponentType type = component.GetComponentType();
+            if(!components.ContainsKey(type))
+                components[type] = component;
             return (T) this;      
         }
-        public virtual T AddComponents(params Component[] statistic)
+        public virtual T AddComponents(params Component[] component)
         {
-            foreach(var stat in statistic)
+            foreach(var stat in component)
             {
                 AddComponent(stat);
             }
             return (T) this;
         }
-        public virtual T UpdateStatistic(Component statistic)
+        public virtual T UpdateStatistic(Component component)
         {
-            ComponentType type = statistic.GetComponentType();
-            if(statistics.ContainsKey(type))
-                statistics[type].SetValue(statistic.GetValue());
+            ComponentType type = component.GetComponentType();
+            if(components.ContainsKey(type))
+                components[type].SetValue(component.GetValue());
             return (T) this;       
         }
-        public virtual T RemoveStatistic(Component statistic)
+        public virtual T RemoveStatistic(Component component)
         {
-            ComponentType type = statistic.GetComponentType();
-            if(statistics.ContainsKey(type))
-                statistics.Remove(type);
+            ComponentType type = component.GetComponentType();
+            if(components.ContainsKey(type))
+                components.Remove(type);
             return (T) this;          
         }
-        public virtual T RemoveStatistic(ComponentType statistic)
+        public virtual T RemoveStatistic(ComponentType component)
         {
-            if(statistics.ContainsKey(statistic))
-                statistics.Remove(statistic);
+            if(components.ContainsKey(component))
+                components.Remove(component);
             return (T) this;          
         }
         public virtual Component<P>? Query<P>(ComponentType type)
         {
-            if(statistics.ContainsKey(type))
-                return (Component<P>) statistics[type];
+            if(components.ContainsKey(type))
+                return (Component<P>) components[type];
             return null;             
         }
     }
