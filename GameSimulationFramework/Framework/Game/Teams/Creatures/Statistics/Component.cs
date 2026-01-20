@@ -1,10 +1,10 @@
 using Framework.Game.GameEventArgs;
 
-namespace Framework.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Components
 {
-    public class Statistic<T> : Statistic
+    public class Component<T> : Component
     {
-        public Statistic(StatisticType type, T? value) : base(type, value)
+        public Component(ComponentType type, T? value) : base(type, value)
         {
             
         }

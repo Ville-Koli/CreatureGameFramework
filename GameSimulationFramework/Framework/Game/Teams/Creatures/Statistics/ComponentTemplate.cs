@@ -2,9 +2,9 @@ using System.Reflection;
 using Framework.Game.BaseTypes;
 using Framework.Game.GameEventArgs;
 
-namespace Framework.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Components
 {
-    public class StatisticTemplate<T> : Statistics<StatisticTemplate<T>> where T : Statistics<T>
+    public class StatisticTemplate<T> : Components<StatisticTemplate<T>> where T : Components<T>
     {
         /**
         Add types here for them to be supported by statistics template
@@ -23,29 +23,29 @@ namespace Framework.Game.Teams.Creatures.Statistics
             
         }
 
-        public virtual void CopyStatistic<P>(Statistic stat, T obj)
+        public virtual void CopyStatistic<P>(Component stat, T obj)
         {
             object? value = stat.GetValue();
             if(value != null && value is CloneableValue<P>){
                 CloneableValue<P> cloneable = (CloneableValue<P>?) stat.GetValue()!;
 
-                obj.AddStatistic(
-                    new Statistic<P>(
-                        stat.GetStatisticType(), 
+                obj.AddComponent(
+                    new Component<P>(
+                        stat.GetComponentType(), 
                         cloneable.Clone())
                     );
             }            
         }
 
-        public virtual void CopyStatistics(T obj)
+        public virtual void CopyComponents(T obj)
         {
             // get the copy statistic method earlier so we only need to generate the
             // generic method in the for loop
             Type thisType = GetType();
             MethodInfo methodInfo = thisType.GetMethod("CopyStatistic")!;
-            foreach(var statistic in GetStatistics())
+            foreach(var statistic in GetComponents())
             {
-                Statistic stat = statistic.Value;
+                Component stat = statistic.Value;
                 object? value = stat.GetValue();
                 if(value != null)
                 {

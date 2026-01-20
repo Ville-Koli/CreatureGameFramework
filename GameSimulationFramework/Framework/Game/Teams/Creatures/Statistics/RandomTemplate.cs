@@ -3,11 +3,11 @@ using System.Reflection;
 using Framework.Game.BaseTypes;
 using Framework.Game.GameEventArgs;
 
-namespace Framework.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Components
 {
-    public class RandomTemplate<T> : StatisticTemplate<T> where T : Statistics<T>
+    public class RandomTemplate<T> : StatisticTemplate<T> where T : Components<T>
     {
-        public override StatisticTemplate<T> AddStatistic(Statistic statistic)
+        public override StatisticTemplate<T> AddComponent(Component statistic)
         {
             if(statistic.GetValue() == null) return this;
 
@@ -15,10 +15,10 @@ namespace Framework.Game.Teams.Creatures.Statistics
 
             if(types.Length == 1)
             {
-                Type type = typeof(StatisticRange<>).MakeGenericType(types[0]);
+                Type type = typeof(ComponentRange<>).MakeGenericType(types[0]);
                 if (type.IsAssignableFrom(statistic.GetValue()!.GetType()))
                 {
-                    return base.AddStatistic(statistic);
+                    return base.AddComponent(statistic);
                 }
                 else
                 {
@@ -33,32 +33,32 @@ namespace Framework.Game.Teams.Creatures.Statistics
             }
         }
 
-        public override void CopyStatistic<P>(Statistic stat, T obj)
+        public override void CopyStatistic<P>(Component stat, T obj)
         {
             object? value = stat.GetValue();
-            if(value != null && value is StatisticRange<CloneableValue<P>>){
-                StatisticRange<CloneableValue<P>> cloneable = (StatisticRange<CloneableValue<P>>?) value!;
+            if(value != null && value is ComponentRange<CloneableValue<P>>){
+                ComponentRange<CloneableValue<P>> cloneable = (ComponentRange<CloneableValue<P>>?) value!;
                 CloneableValue<P>[] realizedValues = cloneable!.RealizeValue(1);
                 if(realizedValues!.Length >= 1){
                     CloneableValue<P> cloneableValue = realizedValues[0];
-                    obj.AddStatistic(
-                        new Statistic<P>(
-                            stat.GetStatisticType(), 
+                    obj.AddComponent(
+                        new Component<P>(
+                            stat.GetComponentType(), 
                             cloneableValue.Clone())
                         );
                 }
             }  
         }
 
-        public override void CopyStatistics(T obj)
+        public override void CopyComponents(T obj)
         {
             // get the copy statistic method earlier so we only need to generate the
             // generic method in the for loop
             Type thisType = GetType();
             MethodInfo methodInfo = thisType.GetMethod("CopyStatistic")!;
-            foreach(var statistic in GetStatistics())
+            foreach(var statistic in GetComponents())
             {
-                Statistic stat = statistic.Value;
+                Component stat = statistic.Value;
                 object? value = stat.GetValue();
                 if(value != null)
                 {
@@ -95,7 +95,7 @@ namespace Framework.Game.Teams.Creatures.Statistics
             }
         }
 
-        private Type? GetStatisticRangeInnerType(Statistic statistic)
+        private Type? GetStatisticRangeInnerType(Component statistic)
         {
             object? value = statistic.GetValue();
             Type[] types = value!.GetType().GetGenericArguments();
@@ -103,7 +103,7 @@ namespace Framework.Game.Teams.Creatures.Statistics
             if(types.Length == 1)
             {
                 Type statisticRangeInnerType = types[0];
-                Type statisticRange = typeof(StatisticRange<>).MakeGenericType(statisticRangeInnerType);
+                Type statisticRange = typeof(ComponentRange<>).MakeGenericType(statisticRangeInnerType);
                 if (statisticRange.IsAssignableFrom(value!.GetType()))
                 {
                     return statisticRangeInnerType;

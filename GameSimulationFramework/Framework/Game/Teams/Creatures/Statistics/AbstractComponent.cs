@@ -1,18 +1,18 @@
 using Framework.Game.GameEventArgs;
 
-namespace Framework.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Components
 {    
-    public abstract class Statistic
+    public abstract class Component
     {
         public event EventHandler<StatisticValueChangedArgs>? OnValueChanged;
-        private StatisticType type;
+        private ComponentType type;
         private object? value;
-        public Statistic(StatisticType type, object? value)
+        public Component(ComponentType type, object? value)
         {
             this.type = type;
             this.value = value;
         }
-        public StatisticType GetStatisticType() => type;
+        public ComponentType GetComponentType() => type;
         public object? GetValue() => value;
         public void SetValue(object? newValue)
         {

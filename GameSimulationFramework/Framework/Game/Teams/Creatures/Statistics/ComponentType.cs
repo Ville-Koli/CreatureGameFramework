@@ -1,6 +1,6 @@
-namespace Framework.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Components
 {
-    public enum StatisticType
+    public enum ComponentType
     {
         Name,
         Health,

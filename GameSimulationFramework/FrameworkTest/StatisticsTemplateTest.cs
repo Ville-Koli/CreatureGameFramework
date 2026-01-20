@@ -1,6 +1,6 @@
 using Framework.Game.BaseTypes;
 using Framework.Game.Teams.Creatures;
-using Framework.Game.Teams.Creatures.Statistics;
+using Framework.Game.Teams.Creatures.Components;
 
 namespace FrameworkTest;
 
@@ -19,7 +19,7 @@ public class StatisticsTemplateTest
     {
         _creatureStatisticsTemplate.Clear();
 
-        if(_creatureStatisticsTemplate.StatisticCount() == 0) Assert.Pass();
+        if(_creatureStatisticsTemplate.ComponentCount() == 0) Assert.Pass();
         Assert.Fail();
     }
 
@@ -28,10 +28,10 @@ public class StatisticsTemplateTest
     {
         _creatureStatisticsTemplate.Clear();
 
-        _creatureStatisticsTemplate.AddStatistic(
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0))
+        _creatureStatisticsTemplate.AddComponent(
+            new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(0))
         );
-        if(_creatureStatisticsTemplate.StatisticCount() == 1) Assert.Pass();
+        if(_creatureStatisticsTemplate.ComponentCount() == 1) Assert.Pass();
         Assert.Fail();
     }
 
@@ -40,11 +40,11 @@ public class StatisticsTemplateTest
     {
         _creatureStatisticsTemplate.Clear();
 
-        _creatureStatisticsTemplate.AddStatistics(
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0)),
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(52))
+        _creatureStatisticsTemplate.AddComponents(
+            new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(0)),
+            new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(52))
         );
-        if(_creatureStatisticsTemplate.StatisticCount() == 1) Assert.Pass();
+        if(_creatureStatisticsTemplate.ComponentCount() == 1) Assert.Pass();
         Assert.Fail();
     }
 
@@ -53,14 +53,14 @@ public class StatisticsTemplateTest
     {
         _creatureStatisticsTemplate.Clear();
         Creature creature = new();
-        _creatureStatisticsTemplate.AddStatistics(
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(525)),
-            new Statistic<CloneableValue<int>>(StatisticType.Shield, new CloneableValue<int>(322)),
-            new Statistic<CloneableValue<int>>(StatisticType.Stamina, new CloneableValue<int>(115)),
-            new Statistic<CloneableValue<int>>(StatisticType.Damage, new CloneableValue<int>(237))
+        _creatureStatisticsTemplate.AddComponents(
+            new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(525)),
+            new Component<CloneableValue<int>>(ComponentType.Shield, new CloneableValue<int>(322)),
+            new Component<CloneableValue<int>>(ComponentType.Stamina, new CloneableValue<int>(115)),
+            new Component<CloneableValue<int>>(ComponentType.Damage, new CloneableValue<int>(237))
         );
-        _creatureStatisticsTemplate.CopyStatistics(creature);
-        if(creature.StatisticCount() == 4) Assert.Pass();
+        _creatureStatisticsTemplate.CopyComponents(creature);
+        if(creature.ComponentCount() == 4) Assert.Pass();
         Assert.Fail();
     }
     [Test]
@@ -68,12 +68,12 @@ public class StatisticsTemplateTest
     {
         _creatureStatisticsTemplate.Clear();
         Creature creature = new();
-        _creatureStatisticsTemplate.AddStatistics(
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(525))
+        _creatureStatisticsTemplate.AddComponents(
+            new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(525))
         );
         _creatureStatisticsTemplate.CopyStatistic<int>
-        (_creatureStatisticsTemplate.Query<CloneableValue<int>>(StatisticType.Health)!, creature);
-        if(creature.StatisticCount() == 1) Assert.Pass();
+        (_creatureStatisticsTemplate.Query<CloneableValue<int>>(ComponentType.Health)!, creature);
+        if(creature.ComponentCount() == 1) Assert.Pass();
         Assert.Fail();
     }
     [Test]
@@ -81,13 +81,13 @@ public class StatisticsTemplateTest
     {
         _creatureStatisticsTemplate.Clear();
 
-        _creatureStatisticsTemplate.AddStatistic(
-            new Statistic<CloneableValue<int>>(StatisticType.Health, new CloneableValue<int>(0))
+        _creatureStatisticsTemplate.AddComponent(
+            new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(0))
         );
 
-        _creatureStatisticsTemplate.RemoveStatistic(StatisticType.Health);
+        _creatureStatisticsTemplate.RemoveStatistic(ComponentType.Health);
 
-        if(_creatureStatisticsTemplate.StatisticCount() == 0) Assert.Pass();
+        if(_creatureStatisticsTemplate.ComponentCount() == 0) Assert.Pass();
         Assert.Fail();
     }
 
@@ -104,11 +104,11 @@ public class StatisticsTemplateTest
             // unsupported type
 
             // statistic type does not matter for this test (any will suffice)
-            _creatureStatisticsTemplate.AddStatistic(
-                new Statistic<CloneableValue<int[]>>(StatisticType.Health, new CloneableValue<int[]>([]))
+            _creatureStatisticsTemplate.AddComponent(
+                new Component<CloneableValue<int[]>>(ComponentType.Health, new CloneableValue<int[]>([]))
             );
 
-            _creatureStatisticsTemplate.CopyStatistics(creature);
+            _creatureStatisticsTemplate.CopyComponents(creature);
         }
         catch (NotSupportedException)
         {

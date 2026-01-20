@@ -1,12 +1,12 @@
 using System.Collections.Immutable;
 using Framework.Game.GameEventArgs;
 
-namespace Framework.Game.Teams.Creatures.Statistics
+namespace Framework.Game.Teams.Creatures.Components
 {
-    public class StatisticRange<T>
+    public class ComponentRange<T>
     {
         private IEnumerable<T> _range;
-        public StatisticRange(IEnumerable<T> rangeOfElements)
+        public ComponentRange(IEnumerable<T> rangeOfElements)
         {
             _range = rangeOfElements;
         }
