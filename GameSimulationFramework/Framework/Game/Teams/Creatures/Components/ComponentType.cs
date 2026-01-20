@@ -17,7 +17,10 @@ namespace Framework.Game.Teams.Creatures.Components
         Debuff,
         
         Passives,
-        Passive
+        Passive,
+
+        Cooldowns,
+        Cooldown
     }
 
     public enum OverallType

@@ -65,6 +65,15 @@ namespace Framework.Game.Teams.Creatures.Components
                 return (Component<P>) components[type];
             return null;             
         }
+        public virtual List<Component<P>?> Query<P>()
+        {
+            List<Component<P>?> matches = new();
+            foreach(var pair in GetComponents())
+            {
+                if(pair.Value is Component<P>) matches.Add((Component<P>?)pair.Value);
+            }
+            return matches;           
+        }
         public override string ToString()
         {
             StringBuilder stringBuilder = new();

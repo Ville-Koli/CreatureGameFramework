@@ -23,16 +23,19 @@ class Program
                             new CloneableValue<string>("Holy spirit")
                         }
                     )),
+
             new Component<ComponentRange<CloneableValue<float>>>(
                 ComponentType.Health, 
                 new ComponentRange<CloneableValue<float>>(
                     new CloneableLazyValueRange(50, 65, 1)
                     )),
+
             new Component<ComponentRange<CloneableValue<float>>>(
                 ComponentType.Stamina, 
                 new ComponentRange<CloneableValue<float>>(
                     new CloneableLazyValueRange(45, 55, 1)
                     )),
+
             new Component<ComponentRange<CloneableValue<Ability>>>(
                 ComponentType.Abilities, 
                 new ComponentRange<CloneableValue<Ability>>(
@@ -53,5 +56,10 @@ class Program
         player.PrintTeam();
         enemy.PrintTeam();
 
+        while(enemy.GetAliveCount() > 0)
+        {
+            Console.WriteLine("Your turn!");
+            string? userInput = Console.ReadLine();   
+        }
     }
 }

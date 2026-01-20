@@ -29,6 +29,22 @@ namespace Framework.Game.Teams
         }
         public Bag.Bag GetBag() => _bag;
         public List<Slot<Creature>> GetCreatures() => _creatures;
+        public  int GetAliveCount()
+        {
+            int alive = 0;
+            foreach(var slot in _creatures)
+            {
+                if(slot.Item != null)
+                {
+                    var health = slot.Item.Query<float>(ComponentType.Health);
+                    if(health != null && health.GetTypedValue() > 0)
+                    {
+                        alive++;
+                    }
+                }
+            }
+            return alive;
+        }
         public Slot<Creature>? GetFreeCreatureSlot()
         {
             foreach(var slot in _creatures)
