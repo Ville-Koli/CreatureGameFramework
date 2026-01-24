@@ -42,7 +42,16 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public override bool Equals(object? obj)
         {
+            // only check components nothing else
             if(obj != null && obj is Component)
+            {
+                Component component = (Component) obj;
+                object? bVal = component.GetValue();
+                if(bVal == null && value == null) return true;
+                else if(bVal != null && value == null) return false;
+                else if(bVal == null && value != null) return false;
+            }
+            if(obj != null && value != null && obj is Component)
                 return this == (Component) obj;
             return false;
         }

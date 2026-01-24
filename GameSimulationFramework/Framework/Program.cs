@@ -54,6 +54,18 @@ class Program
         Team team = new(template, "Player", 4, 8, 8);
         team.PrintTeam();
 
-        Console.WriteLine($"Comparison test: {new Component<int>(ComponentType.Health, 100) < new Component<int>(ComponentType.Health, 555)}");
+        Console.WriteLine($"Comparison test: {new Component<CloneableInt>(ComponentType.Health, new CloneableInt(10)) < new Component<CloneableInt>(ComponentType.Health, new CloneableInt(555))}");
+        List<CloneableLazyValueRange> cloneableFloats = new()
+        {
+            new CloneableLazyValueRange(0, 10, 1),
+            new CloneableLazyValueRange(5, 10, 1),
+            new CloneableLazyValueRange(1, 2, 1),
+            new CloneableLazyValueRange(3, 5, 1),
+            new CloneableLazyValueRange(25, 50, 1),
+            new CloneableLazyValueRange(-103, -32, 1),
+            new CloneableLazyValueRange(5, 23, 1)
+        };
+        cloneableFloats.Sort();
+        cloneableFloats.ForEach(e => Console.WriteLine(e));    
     }
 }

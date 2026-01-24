@@ -8,7 +8,7 @@ namespace Framework.Game.BaseTypes
     the range of min and max with specified step size, but does not save the results into memory
     rather evaluates the desired element during runtime.
     **/
-    public class CloneableLazyValueRange : IEnumerable<CloneableFloat>, IFrameworkCloneable<CloneableLazyValueRange>
+    public class CloneableLazyValueRange : IEnumerable<CloneableFloat>, IFrameworkCloneable<CloneableLazyValueRange>, IComparable
     {
         private float _min;
         private float _max;
@@ -45,6 +45,29 @@ namespace Framework.Game.BaseTypes
         public object? ObjectClone()
         {
             return Clone();
+        }
+
+        public int CompareTo(object? obj)
+        {
+            if(obj != null && obj is CloneableLazyValueRange)
+            {
+                CloneableLazyValueRange range = (CloneableLazyValueRange) obj;
+                if(range._min == _min && range._max == _max) return 0;
+                if(range._min <= _min && range._max > _max) return -1;
+                if(range._min >= _min && range._max < _max) return 1;
+                if(range._min < _min && range._max < _max) return 1;
+                if(range._max < _min) return 1;
+                if(range._min > _max) return -1;
+                if(range._min < _max && _max <= range._max && _min < range._min) return -1;
+                if(range._min < _min && _min < range._max && _max >= range._max) return 1;
+                
+            }
+            return -1;
+        }
+
+        public override string ToString()
+        {
+            return $"[{_min}, {_max}]";
         }
     }
 

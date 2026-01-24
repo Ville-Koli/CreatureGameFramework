@@ -15,5 +15,18 @@ namespace Framework.Game.BaseTypes
             }
             return clonedString;
         }
+        public int CompareTo(object? obj)
+        {
+            if(obj != null && obj is CloneableString)
+            {
+                CloneableString cloneable = (CloneableString) obj;
+                return GetValue().CompareTo(cloneable.GetValue());
+            }else if (obj != null && obj is string)
+            {
+                string cloneable = (string) obj;
+                return GetValue().CompareTo(cloneable);                
+            }
+            return -1;
+        }
     }
 }
