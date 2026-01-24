@@ -40,6 +40,17 @@ namespace Framework.Game.Teams.Creatures.Components
             }
             return defaultVal;
         }
+        public override bool Equals(object? obj)
+        {
+            if(obj != null && obj is Component)
+                return this == (Component) obj;
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            if(value != null) return value.GetHashCode();
+            return base.GetHashCode();
+        }
         public static bool operator==(Component a, Component b)
         {
             return Operation<bool, IComparable>(
@@ -50,11 +61,7 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator!=(Component a, Component b)
         {
-            return Operation<bool, IComparable>(
-                a, b, 
-                defaultVal: false, 
-                operation: (a, b) => {return a.CompareTo(b) != 0;}
-            );
+            return !(a == b);
         }
         public static bool operator>(Component a, Component b)
         {
@@ -74,19 +81,11 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator>=(Component a, Component b)
         {
-            return Operation<bool, IComparable>(
-                a, b, 
-                defaultVal: false, 
-                operation: (a, b) => {return a.CompareTo(b) >= 0;}
-            );
+            return !(a < b);
         }
         public static bool operator<=(Component a, Component b)
         {
-            return Operation<bool, IComparable>(
-                a, b, 
-                defaultVal: false, 
-                operation: (a, b) => {return a.CompareTo(b) <= 0;}
-            );
+            return !(a > b);
         }
         public override string ToString()
         {
