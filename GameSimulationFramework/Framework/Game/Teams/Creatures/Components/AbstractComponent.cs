@@ -25,37 +25,68 @@ namespace Framework.Game.Teams.Creatures.Components
         {
             OnValueChanged?.Invoke(this, new StatisticValueChangedArgs(value));
         }
-        public static bool Comparison(Component a, Component b, Func<IComparable, IComparable, bool> comparison)
+        private static T Operation<T, T2>(Component a, Component b, T defaultVal, Func<T2, T2, T> operation)
         {
             object? aVal = a.GetValue();
             object? bVal = b.GetValue();
 
-            if(aVal != null && aVal is IComparable
-            && bVal != null && bVal is IComparable)
+            if(aVal != null && aVal is T2
+            && bVal != null 
+            && aVal.GetType() == bVal.GetType())
             {
-                if(aVal.GetType().Equals(bVal.GetType())){
-                    IComparable aComparable = (IComparable) aVal;
-                    IComparable bComparable = (IComparable) bVal;
-                    return comparison(aComparable, bComparable);
-                }
+                T2 aComparable = (T2) aVal;
+                T2 bComparable = (T2) bVal;
+                return operation(aComparable, bComparable);
             }
-            return false;
+            return defaultVal;
+        }
+        public static bool operator==(Component a, Component b)
+        {
+            return Operation<bool, IComparable>(
+                a, b, 
+                defaultVal: false, 
+                operation: (a, b) => {return a.CompareTo(b) == 0;}
+            );
+        }
+        public static bool operator!=(Component a, Component b)
+        {
+            return Operation<bool, IComparable>(
+                a, b, 
+                defaultVal: false, 
+                operation: (a, b) => {return a.CompareTo(b) != 0;}
+            );
         }
         public static bool operator>(Component a, Component b)
         {
-            return Comparison(a, b, (a, b) => {return a.CompareTo(b) > 0;});
+            return Operation<bool, IComparable>(
+                a, b, 
+                defaultVal: false, 
+                operation: (a, b) => {return a.CompareTo(b) > 0;}
+            );
         }
         public static bool operator<(Component a, Component b)
         {
-            return Comparison(a, b, (a, b) => {return a.CompareTo(b) < 0;});
+            return Operation<bool, IComparable>(
+                a, b, 
+                defaultVal: false, 
+                operation: (a, b) => {return a.CompareTo(b) < 0;}
+            );
         }
         public static bool operator>=(Component a, Component b)
         {
-            return Comparison(a, b, (a, b) => {return a.CompareTo(b) >= 0;});
+            return Operation<bool, IComparable>(
+                a, b, 
+                defaultVal: false, 
+                operation: (a, b) => {return a.CompareTo(b) >= 0;}
+            );
         }
         public static bool operator<=(Component a, Component b)
         {
-            return Comparison(a, b, (a, b) => {return a.CompareTo(b) <= 0;});
+            return Operation<bool, IComparable>(
+                a, b, 
+                defaultVal: false, 
+                operation: (a, b) => {return a.CompareTo(b) <= 0;}
+            );
         }
         public override string ToString()
         {

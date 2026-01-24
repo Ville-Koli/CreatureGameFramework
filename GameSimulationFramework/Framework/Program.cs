@@ -54,6 +54,6 @@ class Program
         Team team = new(template, "Player", 4, 8, 8);
         team.PrintTeam();
 
-        Console.WriteLine($"Comparison test: {new Component<int>(ComponentType.Health, 100) < new Component<int>(ComponentType.Health, 23)}");
+        Console.WriteLine($"Comparison test: {new Component<int>(ComponentType.Health, 100) < new Component<int>(ComponentType.Health, 555)}");
     }
 }
