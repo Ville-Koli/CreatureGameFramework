@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text;
 using Framework.Game.GameEventArgs;
 
@@ -23,6 +24,38 @@ namespace Framework.Game.Teams.Creatures.Components
         protected private void OnValueChangedEvent(object? value)
         {
             OnValueChanged?.Invoke(this, new StatisticValueChangedArgs(value));
+        }
+        public static bool Comparison(Component a, Component b, Func<IComparable, IComparable, bool> comparison)
+        {
+            object? aVal = a.GetValue();
+            object? bVal = b.GetValue();
+
+            if(aVal != null && aVal is IComparable
+            && bVal != null && bVal is IComparable)
+            {
+                if(aVal.GetType().Equals(bVal.GetType())){
+                    IComparable aComparable = (IComparable) aVal;
+                    IComparable bComparable = (IComparable) bVal;
+                    return comparison(aComparable, bComparable);
+                }
+            }
+            return false;
+        }
+        public static bool operator>(Component a, Component b)
+        {
+            return Comparison(a, b, (a, b) => {return a.CompareTo(b) > 0;});
+        }
+        public static bool operator<(Component a, Component b)
+        {
+            return Comparison(a, b, (a, b) => {return a.CompareTo(b) < 0;});
+        }
+        public static bool operator>=(Component a, Component b)
+        {
+            return Comparison(a, b, (a, b) => {return a.CompareTo(b) >= 0;});
+        }
+        public static bool operator<=(Component a, Component b)
+        {
+            return Comparison(a, b, (a, b) => {return a.CompareTo(b) <= 0;});
         }
         public override string ToString()
         {

@@ -27,6 +27,15 @@ namespace Framework.Game.Teams
                 _creatures[i].Item = creature;
             }
         }
+        public Team(ComponentTemplate<Creature> creatureTemplate, string name, int teamSlots, int creatureSlots, int itemSlots) : this(name, teamSlots, creatureSlots, itemSlots)
+        {
+            for(int i = 0; i < teamSlots; ++i)
+            {
+                Creature creature = new();
+                creatureTemplate.CopyComponents(creature);
+                _creatures[i].Item = creature;
+            }
+        }
         public Bag.Bag GetBag() => _bag;
         public List<Slot<Creature>> GetCreatures() => _creatures;
         public  int GetAliveCount()

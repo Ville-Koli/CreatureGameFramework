@@ -8,18 +8,18 @@ namespace Framework.Game.Teams.Creatures.Components
 {
     public class RandomTemplate<T> : ComponentTemplate<T> where T : Components<T>
     {
-        public override ComponentTemplate<T> AddComponent(Component statistic)
+        public override ComponentTemplate<T> AddComponent(Component component)
         {
-            if(statistic.GetValue() == null) return this;
+            if(component.GetValue() == null) return this;
 
-            Type[] types = statistic.GetValue()!.GetType().GetGenericArguments();
+            Type[] types = component.GetValue()!.GetType().GetGenericArguments();
 
             if(types.Length == 1)
             {
                 Type type = typeof(ComponentRange<>).MakeGenericType(types[0]);
-                if (type.IsAssignableFrom(statistic.GetValue()!.GetType()))
+                if (type.IsAssignableFrom(component.GetValue()!.GetType()))
                 {
-                    return base.AddComponent(statistic);
+                    return base.AddComponent(component);
                 }
                 else
                 {
@@ -72,7 +72,8 @@ namespace Framework.Game.Teams.Creatures.Components
                 }
             }
             return cloneables;
-        }    
+        }
+        
         public override void CopyComponents(T obj)
         {
             foreach(var statistic in GetComponents())
