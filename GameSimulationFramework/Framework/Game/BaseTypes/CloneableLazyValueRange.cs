@@ -8,7 +8,7 @@ namespace Framework.Game.BaseTypes
     the range of min and max with specified step size, but does not save the results into memory
     rather evaluates the desired element during runtime.
     **/
-    public class CloneableLazyValueRange : IEnumerable<CloneableFloat>, IClonable<CloneableLazyValueRange>
+    public class CloneableLazyValueRange : IEnumerable<CloneableFloat>, IFrameworkCloneable<CloneableLazyValueRange>
     {
         private float _min;
         private float _max;
@@ -40,6 +40,11 @@ namespace Framework.Game.BaseTypes
         public CloneableLazyValueRange Clone()
         {
             return new CloneableLazyValueRange(_min, _max, _step);
+        }
+
+        public object? ObjectClone()
+        {
+            return Clone();
         }
     }
 

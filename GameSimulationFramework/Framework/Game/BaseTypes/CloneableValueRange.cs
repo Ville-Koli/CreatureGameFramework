@@ -7,7 +7,7 @@ namespace Framework.Game.BaseTypes
     IEnumerable structure, which generates a range of cloneable float values between
     the range of min and max with specified step size
     **/
-    public class CloneableValueRange : IEnumerable<CloneableFloat>, IClonable<CloneableFloat[]>
+    public class CloneableValueRange : IEnumerable<CloneableFloat>, IFrameworkCloneable<CloneableFloat[]>
     {
         private CloneableFloat[] _value;
         private float _min;
@@ -39,7 +39,7 @@ namespace Framework.Game.BaseTypes
 
         public CloneableFloat[] GetValue() => _value;
 
-        CloneableFloat[] IClonable<CloneableFloat[]>.Clone()
+        CloneableFloat[] Clone()
         {
             int steps = (int)((_max - _min) / _step);
 
@@ -55,6 +55,16 @@ namespace Framework.Game.BaseTypes
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public object? ObjectClone()
+        {
+            return Clone();
+        }
+
+        CloneableFloat[] IFrameworkCloneable<CloneableFloat[]>.Clone()
+        {
+            return Clone();
         }
     }
 

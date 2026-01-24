@@ -2,6 +2,7 @@ using System.Collections;
 using System.Reflection;
 using Framework.Game.BaseTypes;
 using Framework.Game.GameEventArgs;
+using Framework.Game.Interfaces;
 
 namespace Framework.Game.Teams.Creatures.Components
 {
@@ -33,83 +34,71 @@ namespace Framework.Game.Teams.Creatures.Components
             }
         }
 
-        public override void CopyStatistic<P>(Component stat, T obj)
+        public ComponentTemplate<T> RealizeTemplate()
         {
-            object? value = stat.GetValue();
-            if(value != null && value is ComponentRange<CloneableValue<P>>){
-                ComponentRange<CloneableValue<P>> cloneable = (ComponentRange<CloneableValue<P>>?) value!;
-                CloneableValue<P>[]? realizedValues = cloneable!.RealizeValue(1);
-                if(realizedValues != null && realizedValues!.Length >= 1){
-                    CloneableValue<P> cloneableValue = realizedValues[0];
-                    obj.AddComponent(
-                        new Component<P>(
-                            stat.GetComponentType(), 
-                            cloneableValue.Clone())
-                        );
-                }
-            }  
+            ComponentTemplate<T> template = new();
+            List<Component<IFrameworkCloneable>> cloneables = GetClonableComponents();
+            foreach(var component in cloneables)
+            {
+                template.AddComponent(component);
+            }
+            return template;
         }
-
-        public override void CopyComponents(T obj)
+        public override List<Component<IFrameworkCloneable>> GetClonableComponents()
         {
-            // get the copy statistic method earlier so we only need to generate the
-            // generic method in the for loop
-            Type thisType = GetType();
-            MethodInfo methodInfo = thisType.GetMethod("CopyStatistic")!;
+            List<Component<IFrameworkCloneable>> cloneables = new();
             foreach(var statistic in GetComponents())
             {
                 Component stat = statistic.Value;
                 object? value = stat.GetValue();
                 if(value != null)
                 {
-                    Type? statisticRangeInnerType = GetStatisticRangeInnerType(stat);
-                    if(statisticRangeInnerType == null) throw new NotSupportedException("Statistic inner typing does not adhere to StatisticRange!");
-                    bool supported = false;
-                    foreach(var type in supportedTypes)
+                    if (value is IRealize)
                     {
-                        // check whether value inherits type
-                        if(
-                        type.IsAssignableFrom(statisticRangeInnerType)
-                        )
+                        IRealize realizeableValue = (IRealize) value;
+                        object?[]? realizedValues = realizeableValue.RealizeValue(1);
+                        if(realizedValues != null)
                         {
-                            // get generic arguments to get the inner typing of a cloneable value
-                            Type[] innerTypes = type.GetGenericArguments();
-
-                            if(innerTypes.Length > 1 || innerTypes.Length == 0) throw new NotSupportedException("Unsupported amount of generic arguments in type!");
-                            Type innerType = innerTypes[0];
-                            
-                            // generate the generic method of copy statistic and invoke it with the statistic element and the object
-                            // in which we want to copy the statistic element to it
-                            MethodInfo generic = methodInfo!.MakeGenericMethod(innerType);
-                            generic?.Invoke(this, [stat, obj]);
-                            supported = true;
-                            break;
+                            foreach(var elem in realizedValues)
+                            {
+                                if(elem != null && elem is IFrameworkCloneable)
+                                {
+                                    IFrameworkCloneable cloneable = (IFrameworkCloneable) elem;
+                                    cloneables.Add(new Component<IFrameworkCloneable>(stat.GetComponentType(), cloneable));
+                                }
+                            }
                         }
                     }
-
-                    if(!supported) throw new NotSupportedException(
-                        $"Unsupported type attempted to be copied in statistics template: {value.GetType()} inner type: {statisticRangeInnerType}"
-                    );                            
-                        
                 }
             }
-        }
-
-        private Type? GetStatisticRangeInnerType(Component statistic)
+            return cloneables;
+        }    
+        public override void CopyComponents(T obj)
         {
-            object? value = statistic.GetValue();
-            Type[] types = value!.GetType().GetGenericArguments();
-
-            if(types.Length == 1)
+            foreach(var statistic in GetComponents())
             {
-                Type statisticRangeInnerType = types[0];
-                Type statisticRange = typeof(ComponentRange<>).MakeGenericType(statisticRangeInnerType);
-                if (statisticRange.IsAssignableFrom(value!.GetType()))
+                Component stat = statistic.Value;
+                object? value = stat.GetValue();
+                if(value != null)
                 {
-                    return statisticRangeInnerType;
+                    if (value is IRealize)
+                    {
+                        IRealize realizeableValue = (IRealize) value;
+                        object?[]? realizedValues = realizeableValue.RealizeValue(1);
+                        if(realizedValues != null)
+                        {
+                            foreach(var elem in realizedValues)
+                            {
+                                if(elem is IFrameworkCloneable)
+                                {
+                                    IFrameworkCloneable cloneable = (IFrameworkCloneable) elem;
+                                    CopyComponent(stat.GetComponentType(), cloneable, obj);
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            return null;
         }
     } 
 }

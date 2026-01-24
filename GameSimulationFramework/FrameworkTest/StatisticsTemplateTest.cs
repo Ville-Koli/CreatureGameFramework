@@ -6,12 +6,12 @@ namespace FrameworkTest;
 
 public class StatisticsTemplateTest
 {
-    private StatisticTemplate<Creature> _creatureStatisticsTemplate;
+    private ComponentTemplate<Creature> _creatureStatisticsTemplate;
 
     [SetUp]
     public void Setup()
     {
-        _creatureStatisticsTemplate = new StatisticTemplate<Creature>();
+        _creatureStatisticsTemplate = new ComponentTemplate<Creature>();
     }
 
     [Test]
@@ -71,7 +71,7 @@ public class StatisticsTemplateTest
         _creatureStatisticsTemplate.AddComponents(
             new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(525))
         );
-        _creatureStatisticsTemplate.CopyStatistic<int>
+        _creatureStatisticsTemplate.CopyComponent
         (_creatureStatisticsTemplate.Query<CloneableValue<int>>(ComponentType.Health)!, creature);
         if(creature.ComponentCount() == 1) Assert.Pass();
         Assert.Fail();

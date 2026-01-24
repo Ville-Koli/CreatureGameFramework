@@ -2,6 +2,12 @@ using Framework.Game.GameEventArgs;
 
 namespace Framework.Game.Teams.Creatures.Components
 {
+    public class ObjectComponent : Component
+    {
+        public ObjectComponent(ComponentType type, object? value) : base(type, value)
+        {
+        }
+    }
     public class Component<T> : Component
     {
         public Component(ComponentType type, T? value) : base(type, value)

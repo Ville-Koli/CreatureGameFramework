@@ -1,7 +1,5 @@
 ﻿using Framework.Game.BaseTypes;
-using Framework.Game.Extensions;
 using Framework.Game.Teams;
-using Framework.Game.Teams.Bag;
 using Framework.Game.Teams.Creatures;
 using Framework.Game.Teams.Creatures.Abilities;
 using Framework.Game.Teams.Creatures.Components;
@@ -49,17 +47,10 @@ class Program
                     ))
         );
 
-        // Team 1, Team 2
-        Team player = new(template, "Player", 4, 8, 8);
-        Team enemy = new(template, "Enemy", 4, 8, 8);
-
-        player.PrintTeam();
-        enemy.PrintTeam();
-
-        while(enemy.GetAliveCount() > 0)
-        {
-            Console.WriteLine("Your turn!");
-            string? userInput = Console.ReadLine();   
-        }
+        ComponentTemplate<Creature> componentTemplate = template.RealizeTemplate();
+        Creature creature = new();
+        componentTemplate.CopyComponents(creature);
+        Console.WriteLine(creature);
+        Console.WriteLine(componentTemplate);
     }
 }

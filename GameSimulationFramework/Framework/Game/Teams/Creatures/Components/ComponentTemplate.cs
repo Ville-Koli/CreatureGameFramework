@@ -1,6 +1,7 @@
 using System.Reflection;
 using Framework.Game.BaseTypes;
 using Framework.Game.GameEventArgs;
+using Framework.Game.Interfaces;
 using Framework.Game.Teams.Creatures.Abilities;
 
 namespace Framework.Game.Teams.Creatures.Components
@@ -24,60 +25,56 @@ namespace Framework.Game.Teams.Creatures.Components
         {
             
         }
-
-        public virtual void CopyStatistic<P>(Component stat, T obj)
+        public virtual List<Component<IFrameworkCloneable>> GetClonableComponents()
         {
-            object? value = stat.GetValue();
-            if(value != null && value is CloneableValue<P>){
-                CloneableValue<P> cloneable = (CloneableValue<P>?) stat.GetValue()!;
-
-                obj.AddComponent(
-                    new Component<P>(
-                        stat.GetComponentType(), 
-                        cloneable.Clone())
-                    );
-            }            
-        }
-
-        public virtual void CopyComponents(T obj)
-        {
-            // get the copy statistic method earlier so we only need to generate the
-            // generic method in the for loop
-            Type thisType = GetType();
-            MethodInfo methodInfo = thisType.GetMethod("CopyStatistic")!;
+            List<Component<IFrameworkCloneable>> cloneables = new();
             foreach(var statistic in GetComponents())
             {
                 Component stat = statistic.Value;
                 object? value = stat.GetValue();
                 if(value != null)
                 {
-                    bool supported = false;
-                    foreach(var type in supportedTypes)
+                    if(value != null && value is IFrameworkCloneable)
                     {
-                        // check whether value inherits type
-                        if(
-                        type.IsAssignableFrom(value.GetType())
-                        )
-                        {
-                            // get generic arguments to get the inner typing of a cloneable value
-                            Type[] innerTypes = type.GetGenericArguments();
-
-                            if(innerTypes.Length > 1 || innerTypes.Length == 0) throw new NotSupportedException("Unsupported amount of generic arguments in type!");
-                            Type innerType = innerTypes[0];
-
-                            // generate the generic method of copy statistic and invoke it with the statistic element and the object
-                            // in which we want to copy the statistic element to it
-                            MethodInfo generic = methodInfo!.MakeGenericMethod(innerType);
-                            generic?.Invoke(this, [stat, obj]);
-                            supported = true;
-                            break;
-                        }
+                        IFrameworkCloneable cloneable = (IFrameworkCloneable) value;
+                        cloneables.Add(new Component<IFrameworkCloneable>(stat.GetComponentType(), cloneable));
                     }
-
-                    if(!supported) throw new NotSupportedException(
-                        $"Unsupported type attempted to be copied in statistics template: {value.GetType()}"
-                    );
                 }
+            }
+            return cloneables;
+        }
+
+        public virtual void CopyComponents(T obj)
+        {
+            List<Component<IFrameworkCloneable>> cloneables = GetClonableComponents();
+            foreach(var cloneable in cloneables)
+            {
+                IFrameworkCloneable? typedValue = cloneable.GetTypedValue();
+                if(typedValue != null)
+                {
+                    CopyComponent(cloneable.GetComponentType(), typedValue!, obj); 
+                }  
+            }
+        }
+        public virtual void CopyComponent(ComponentType type, IFrameworkCloneable cloneable, T obj)
+        {
+            obj.AddComponent(
+                new ObjectComponent(
+                    type, 
+                    cloneable.ObjectClone()
+                    )
+            );
+        }
+        public virtual void CopyComponent(Component component, T obj)
+        {
+            if(component.GetValue() != null && component.GetValue() is IFrameworkCloneable)
+            {
+                obj.AddComponent(
+                    new ObjectComponent(
+                        component.GetComponentType(), 
+                        ((IFrameworkCloneable)component.GetValue()!).ObjectClone()
+                        )
+                );   
             }
         }
     } 

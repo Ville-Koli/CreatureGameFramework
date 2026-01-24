@@ -2,7 +2,7 @@ using Framework.Game.Interfaces;
 
 namespace Framework.Game.BaseTypes
 {
-    public class CloneableValue<T> : IClonable<T>
+    public class CloneableValue<T> : IFrameworkCloneable<T>
     {
         private T _value;
         public CloneableValue(T value)
@@ -23,6 +23,11 @@ namespace Framework.Game.BaseTypes
             if(_value != null)
                 return _value.ToString()!;
             return "";
+        }
+
+        public object? ObjectClone()
+        {
+            return Clone();
         }
     }
 }
