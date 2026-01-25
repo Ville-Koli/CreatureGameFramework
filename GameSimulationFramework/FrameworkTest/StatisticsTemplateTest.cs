@@ -85,7 +85,7 @@ public class StatisticsTemplateTest
             new Component<CloneableValue<int>>(ComponentType.Health, new CloneableValue<int>(0))
         );
 
-        _creatureStatisticsTemplate.RemoveStatistic(ComponentType.Health);
+        _creatureStatisticsTemplate.RemoveComponent(ComponentType.Health);
 
         if(_creatureStatisticsTemplate.ComponentCount() == 0) Assert.Pass();
         Assert.Fail();

@@ -46,14 +46,14 @@ namespace Framework.Game.Teams.Creatures.Components
                 components[type].SetValue(component.GetValue());
             return (T) this;       
         }
-        public virtual T RemoveStatistic(Component component)
+        public virtual T RemoveComponent(Component component)
         {
             ComponentType type = component.GetComponentType();
             if(components.ContainsKey(type))
                 components.Remove(type);
             return (T) this;          
         }
-        public virtual T RemoveStatistic(ComponentType component)
+        public virtual T RemoveComponent(ComponentType component)
         {
             if(components.ContainsKey(component))
                 components.Remove(component);
@@ -61,8 +61,20 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public virtual Component<P>? Query<P>(ComponentType type)
         {
-            if(components.ContainsKey(type))
-                return (Component<P>) components[type];
+            if (components.ContainsKey(type))
+            {
+                Component component = components[type];
+                if(component is Component<P>)
+                    return (Component<P>) component;
+                else if(component is ObjectComponent)
+                {
+                    RemoveComponent(type);
+                    Component<P> typeP = new Component<P>(type, (P?) component.GetValue());
+                    AddComponent(typeP);
+                    return typeP;
+                }
+                    
+            }
             return null;             
         }
         public virtual List<Component<P>?> Query<P>()

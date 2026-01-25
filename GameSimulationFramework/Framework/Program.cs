@@ -50,6 +50,8 @@ class Program
         ComponentTemplate<Creature> componentTemplate = template.RealizeTemplate();
         Creature creature = new();
         componentTemplate.CopyComponents(creature);
+        Creature creature2 = new();
+        componentTemplate.CopyComponents(creature2);
 
         Team team = new(template, "Player", 4, 8, 8);
         team.PrintTeam();
@@ -69,6 +71,11 @@ class Program
             new CloneableLazyValueRange(5, 23, 1)
         };
         cloneableFloats.Sort();
-        cloneableFloats.ForEach(e => Console.WriteLine(e));    
+        cloneableFloats.ForEach(e => Console.WriteLine(e));
+        var ability = creature.Query<Ability>(ComponentType.Abilities);
+        Console.WriteLine(creature2);
+        ability!.GetTypedValue()!.Action(creature.GetSource(), creature2.GetSource());
+        Console.WriteLine(creature2);
+        Console.WriteLine($"{new CloneableInt(10).CompareTo(5)}");
     }
 }

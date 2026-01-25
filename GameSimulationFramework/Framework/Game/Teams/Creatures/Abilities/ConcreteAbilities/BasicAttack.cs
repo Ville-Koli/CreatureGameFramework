@@ -4,16 +4,16 @@ namespace Framework.Game.Teams.Creatures.Abilities
 {
     public class BasicAttack : Ability
     {
-        private Component<int> _damageComponent;
-        public BasicAttack(int damage)
+        private Component<float> _damageComponent;
+        public BasicAttack(float damage)
         {
-            _damageComponent = new Component<int>(ComponentType.Damage, damage);
+            _damageComponent = new Component<float>(ComponentType.Damage, damage);
             AddComponent(_damageComponent);
         }
 
         public override void Action(Source<Creature> from, Source<Creature> to)
         {
-            var healthComponent = to.GetSource().Query<int>(ComponentType.Health);
+            Component<float>? healthComponent = to.GetSource().Query<float>(ComponentType.Health);
 
             if(healthComponent != null)
             {

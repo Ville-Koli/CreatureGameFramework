@@ -86,7 +86,7 @@ public class StatisticsTest
         _creatureStatistics.AddComponent(
             new Component<CloneableInt>(ComponentType.Health, new CloneableInt(10))
         );
-        _creatureStatistics.RemoveStatistic(_creatureStatistics.Query<CloneableInt>(ComponentType.Health)!);
+        _creatureStatistics.RemoveComponent(_creatureStatistics.Query<CloneableInt>(ComponentType.Health)!);
         if(_creatureStatistics.ComponentCount() == 0) Assert.Pass();
         Assert.Fail();
     }
@@ -99,7 +99,7 @@ public class StatisticsTest
         _creatureStatistics.AddComponent(
             new Component<CloneableInt>(ComponentType.Health, new CloneableInt(10))
         );
-        _creatureStatistics.RemoveStatistic(ComponentType.Health);
+        _creatureStatistics.RemoveComponent(ComponentType.Health);
         if(_creatureStatistics.ComponentCount() == 0) Assert.Pass();
         Assert.Fail();
     }
@@ -108,7 +108,7 @@ public class StatisticsTest
     public void Test_remove_from_empty_statistic_type()
     {
         _creatureStatistics.Clear();
-        _creatureStatistics.RemoveStatistic(ComponentType.Health);
+        _creatureStatistics.RemoveComponent(ComponentType.Health);
         if(_creatureStatistics.ComponentCount() == 0) Assert.Pass();
         Assert.Fail();
     }

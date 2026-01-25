@@ -40,21 +40,6 @@ namespace Framework.Game.Teams.Creatures.Components
             }
             return defaultVal;
         }
-        public override bool Equals(object? obj)
-        {
-            // only check components nothing else
-            if(obj != null && obj is Component)
-            {
-                Component component = (Component) obj;
-                object? bVal = component.GetValue();
-                if(bVal == null && value == null) return true;
-                else if(bVal != null && value == null) return false;
-                else if(bVal == null && value != null) return false;
-            }
-            if(obj != null && value != null && obj is Component)
-                return this == (Component) obj;
-            return false;
-        }
         public override int GetHashCode()
         {
             if(value != null) return value.GetHashCode();
@@ -62,8 +47,12 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator==(Component a, Component b)
         {
+            if(ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
+            if(!ReferenceEquals(a, null) && ReferenceEquals(b, null)) return false;
+            if(ReferenceEquals(a, null) && !ReferenceEquals(b, null)) return false;
+
             return Operation<bool, IComparable>(
-                a, b, 
+                a!, b!, 
                 defaultVal: false, 
                 operation: (a, b) => {return a.CompareTo(b) == 0;}
             );
@@ -74,16 +63,24 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator>(Component a, Component b)
         {
+            if(ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
+            if(!ReferenceEquals(a, null) && ReferenceEquals(b, null)) return false;
+            if(ReferenceEquals(a, null) && !ReferenceEquals(b, null)) return false;
+
             return Operation<bool, IComparable>(
-                a, b, 
+                a!, b!, 
                 defaultVal: false, 
                 operation: (a, b) => {return a.CompareTo(b) > 0;}
             );
         }
         public static bool operator<(Component a, Component b)
         {
+            if(ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
+            if(!ReferenceEquals(a, null) && ReferenceEquals(b, null)) return false;
+            if(ReferenceEquals(a, null) && !ReferenceEquals(b, null)) return false;
+            
             return Operation<bool, IComparable>(
-                a, b, 
+                a!, b!, 
                 defaultVal: false, 
                 operation: (a, b) => {return a.CompareTo(b) < 0;}
             );
