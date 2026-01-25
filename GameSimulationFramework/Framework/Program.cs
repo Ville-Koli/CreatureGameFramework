@@ -60,9 +60,12 @@ class Program
             new CloneableLazyValueRange(0, 10, 1),
             new CloneableLazyValueRange(5, 10, 1),
             new CloneableLazyValueRange(1, 2, 1),
+            new CloneableLazyValueRange(1.5f, 1.95f, 1),
             new CloneableLazyValueRange(3, 5, 1),
             new CloneableLazyValueRange(25, 50, 1),
             new CloneableLazyValueRange(-103, -32, 1),
+            new CloneableLazyValueRange(-95, -32, 1),
+            new CloneableLazyValueRange(-95, -32, 1),
             new CloneableLazyValueRange(5, 23, 1)
         };
         cloneableFloats.Sort();

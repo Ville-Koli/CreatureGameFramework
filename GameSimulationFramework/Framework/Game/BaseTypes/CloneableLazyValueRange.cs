@@ -52,15 +52,9 @@ namespace Framework.Game.BaseTypes
             if(obj != null && obj is CloneableLazyValueRange)
             {
                 CloneableLazyValueRange range = (CloneableLazyValueRange) obj;
-                // abomination of dont touch
-                if(range._min == _min && range._max == _max) return 0;
-                if(range._min <= _min && range._max > _max) return -1;
-                if(range._min >= _min && range._max < _max) return 1;
-                if(range._min < _min && range._max < _max) return 1;
-                if(range._max < _min) return 1;
-                if(range._min > _max) return -1;
-                if(range._min < _max && _max <= range._max && _min < range._min) return -1;
-                if(range._min < _min && _min < range._max && _max >= range._max) return 1;
+                if(range._max <= _max) return 1;
+                if(range._max == _max && range._min == _min) return 0;
+                if(range._max >= _max) return -1;
                 
             }
             return -1;
