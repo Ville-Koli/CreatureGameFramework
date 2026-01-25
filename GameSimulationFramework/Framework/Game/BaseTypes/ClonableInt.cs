@@ -12,12 +12,16 @@ namespace Framework.Game.BaseTypes
             {
                 CloneableInt cloneableInt = (CloneableInt) obj;
                 return GetValue().CompareTo(cloneableInt.GetValue());
-            }else if (obj != null && obj is int)
-            {
-                int cloneableInt = (int) obj;
-                return GetValue().CompareTo(cloneableInt);                
             }
-            return -1;
+            return obj switch
+            {
+                int i => GetValue().CompareTo(i),
+                float f => ((float) GetValue()).CompareTo(f),
+                double d => ((double) GetValue()).CompareTo(d),
+                short s => ((short) GetValue()).CompareTo(s),
+                long l => ((long) GetValue()).CompareTo(l),
+                _ => -1
+            };
         }
     }
 }
