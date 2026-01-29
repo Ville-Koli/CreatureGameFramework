@@ -99,5 +99,31 @@ namespace Framework.Game.Teams.Creatures.Components
             stringBuilder.Append($"Component: {type} Value: {value}");
             return stringBuilder.ToString();
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            return (value, obj) switch
+            {
+                (IComparable x, IComparable y) => x.GetType().Equals(y.GetType()) ? x.CompareTo(y) == 0 : false,
+                (int x, Component<float> y) => x.CompareTo((int) y.GetTypedValue()) == 0,
+                (int x, Component<double> y) => x.CompareTo((int) y.GetTypedValue()) == 0, 
+                (float x, Component<int> y) => x.CompareTo((float) y.GetTypedValue()) == 0,
+                (float x, Component<double> y) => x.CompareTo((float) y.GetTypedValue()) == 0,
+                (double x, Component<int> y) => x.CompareTo((double) y.GetTypedValue()) == 0,
+                (double x, Component<float> y) => x.CompareTo((double) y.GetTypedValue()) == 0,                
+                (object x, Component y) =>  x.GetType().Equals(y.GetValue()?.GetType()) ? x.Equals(y.GetValue()) : false,
+                _ => false
+            };
+        }
     }
 }
