@@ -77,6 +77,6 @@ class Program
         ability!.GetTypedValue()!.Action(creature.GetSource(), creature2.GetSource());
         Console.WriteLine(creature2);
         Console.WriteLine($"{new CloneableInt(10).CompareTo(13.0)}");
-        Console.WriteLine($"{new Component<int>(ComponentType.Health, 10).Equals(new Component<float>(ComponentType.Health, 10))}");
+        Console.WriteLine($"{new Component<int>(ComponentType.Health, 10) == new Component<int>(ComponentType.Health, 10)}");
     }
 }

@@ -25,7 +25,7 @@ namespace Framework.Game.Teams.Creatures.Components
         {
             OnValueChanged?.Invoke(this, new StatisticValueChangedArgs(value));
         }
-        private static T Operation<T, T2>(Component a, Component b, T defaultVal, Func<T2, T2, T> operation)
+        private static T Operation<T, T2, T3>(Component a, Component b, T defaultVal, Func<T2, T3, T> operation)
         {
             object? aVal = a.GetValue();
             object? bVal = b.GetValue();
@@ -35,7 +35,7 @@ namespace Framework.Game.Teams.Creatures.Components
             && aVal.GetType() == bVal.GetType())
             {
                 T2 aComparable = (T2) aVal;
-                T2 bComparable = (T2) bVal;
+                T3 bComparable = (T3) bVal;
                 return operation(aComparable, bComparable);
             }
             return defaultVal;
@@ -47,11 +47,11 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator==(Component a, Component b)
         {
-            if(ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
-            if(!ReferenceEquals(a, null) && ReferenceEquals(b, null)) return false;
-            if(ReferenceEquals(a, null) && !ReferenceEquals(b, null)) return false;
+            if(a is null && b is null) return true;
+            if(a is not null && b is null) return false;
+            if(a is null && b is not null) return false;
 
-            return Operation<bool, IComparable>(
+            return Operation<bool, IComparable, IComparable>(
                 a!, b!, 
                 defaultVal: false, 
                 operation: (a, b) => {return a.CompareTo(b) == 0;}
@@ -63,11 +63,11 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator>(Component a, Component b)
         {
-            if(ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
-            if(!ReferenceEquals(a, null) && ReferenceEquals(b, null)) return false;
-            if(ReferenceEquals(a, null) && !ReferenceEquals(b, null)) return false;
+            if(a is null && b is null) return true;
+            if(a is not null && b is null) return false;
+            if(a is null && b is not null) return false;
 
-            return Operation<bool, IComparable>(
+            return Operation<bool, IComparable, IComparable>(
                 a!, b!, 
                 defaultVal: false, 
                 operation: (a, b) => {return a.CompareTo(b) > 0;}
@@ -75,11 +75,11 @@ namespace Framework.Game.Teams.Creatures.Components
         }
         public static bool operator<(Component a, Component b)
         {
-            if(ReferenceEquals(a, null) && ReferenceEquals(b, null)) return true;
-            if(!ReferenceEquals(a, null) && ReferenceEquals(b, null)) return false;
-            if(ReferenceEquals(a, null) && !ReferenceEquals(b, null)) return false;
+            if(a is null && b is null) return true;
+            if(a is not null && b is null) return false;
+            if(a is null && b is not null) return false;
             
-            return Operation<bool, IComparable>(
+            return Operation<bool, IComparable, IComparable>(
                 a!, b!, 
                 defaultVal: false, 
                 operation: (a, b) => {return a.CompareTo(b) < 0;}
@@ -114,7 +114,7 @@ namespace Framework.Game.Teams.Creatures.Components
 
             return (value, obj) switch
             {
-                (IComparable x, IComparable y) => x.GetType().Equals(y.GetType()) ? x.CompareTo(y) == 0 : false,
+                (IComparable x, IComparable y) => x.GetType().Equals(y.GetType()) && x.CompareTo(y) == 0,
                 (int x, Component<float> y) => x.CompareTo((int) y.GetTypedValue()) == 0,
                 (int x, Component<double> y) => x.CompareTo((int) y.GetTypedValue()) == 0, 
                 (float x, Component<int> y) => x.CompareTo((float) y.GetTypedValue()) == 0,
