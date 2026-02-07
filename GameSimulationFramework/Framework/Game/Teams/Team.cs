@@ -46,6 +46,7 @@ namespace Framework.Game.Teams
                 if(slot.Item != null)
                 {
                     var health = slot.Item.Query<float>(ComponentType.Health);
+                    
                     if(health != null && health.GetTypedValue() > 0)
                     {
                         alive++;
