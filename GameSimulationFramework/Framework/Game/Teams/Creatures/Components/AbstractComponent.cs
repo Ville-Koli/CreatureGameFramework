@@ -99,5 +99,20 @@ namespace Framework.Game.Teams.Creatures.Components
             stringBuilder.Append($"Component: {type} Value: {value}");
             return stringBuilder.ToString();
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

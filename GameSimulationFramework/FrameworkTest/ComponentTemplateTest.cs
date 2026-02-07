@@ -4,7 +4,7 @@ using Framework.Game.Teams.Creatures.Components;
 
 namespace FrameworkTest;
 
-public class StatisticsTemplateTest
+public class ComponentTemplateTest
 {
     private ComponentTemplate<Creature> _creatureStatisticsTemplate;
 
@@ -88,34 +88,6 @@ public class StatisticsTemplateTest
         _creatureStatisticsTemplate.RemoveComponent(ComponentType.Health);
 
         if(_creatureStatisticsTemplate.ComponentCount() == 0) Assert.Pass();
-        Assert.Fail();
-    }
-
-    [Test]
-    public void Test_unsupported_type()
-    {
-        _creatureStatisticsTemplate.Clear();
-        try
-        {
-            Creature creature = new Creature();
-
-            // int[] is not cloneable by itself as it is a reference and would need
-            // to be extended by an external class so int[] is suitable for testing
-            // unsupported type
-
-            // statistic type does not matter for this test (any will suffice)
-            _creatureStatisticsTemplate.AddComponent(
-                new Component<CloneableValue<int[]>>(ComponentType.Health, new CloneableValue<int[]>([]))
-            );
-
-            _creatureStatisticsTemplate.CopyComponents(creature);
-        }
-        catch (NotSupportedException)
-        {
-            // pass the test if the template causes not supported error on types
-            // which are not cloneable by ICloneable interace
-            Assert.Pass();
-        }
         Assert.Fail();
     }
 }

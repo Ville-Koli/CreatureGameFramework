@@ -4,7 +4,7 @@ using Framework.Game.Teams.Creatures.Components;
 
 namespace FrameworkTest;
 
-public class StatisticsTest
+public class ComponentsTest
 {
     private Creature _creatureStatistics;
     [SetUp]
